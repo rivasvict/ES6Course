@@ -1,0 +1,23 @@
+{
+  "name": "es6course",
+  "version": "1.0.0",
+  "description": "A practical notebook for ES6 course",
+  "main": "arrayHelperMethods.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vctr90/ES6Course.git"
+  },
+  "keywords": [
+    "ES6",
+    "course"
+  ],
+  "author": "Victor Rivas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vctr90/ES6Course/issues"
+  },
+  "homepage": "https://github.com/vctr90/ES6Course#readme"
+}

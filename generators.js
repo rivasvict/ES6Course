@@ -122,7 +122,15 @@ const administrationTeamS = {
   secretary: 'Bruno',
   // This si a new ES6 syntax element [Symbol.iterator] it will help us to define this object's generator behavior.
   // Whenever we call this object inside another generator with prepended yield*, it wil automatically point to
-  // this generator function
+  // this generator function.
+  //
+  // Attrubutes wrpped by brackets at the very definitions are part of something called in ES6 As key interpolation.
+  // It is not forming an array
+  //
+  // Symbol iterators tell for of loops how to behave, in fact, simple arrays have built in symbol iterators
+  // that is why you can use for of loops with them as well
+  //
+  // For of loops will llok fo yield* syntax and make sure to iterate over the internal iterator
   [Symbol.iterator]: function*() {
     yield this.humanResources;
     yield this.secretary
@@ -199,4 +207,62 @@ const engineeringTeamS = {
 // By this one:
 for (let member of engineeringTeamS) {
   console.log(member);
+}
+
+
+
+
+
+
+// PRACTICAL EXAMPLE
+//
+// Using tree data structure
+
+console.log('--PRACTICAL EXAMPLE--');
+
+class Comment {
+  constructor(content, children) {
+    this.content = content;
+    this.children = children;
+  }
+
+  // Symbol iterator declarations inside clases have a little different looking as you will see bellow
+  // *[Symbol.iterator]() {
+  //    Iterator's code goes here
+  // }
+  //
+  // This is just as we write functions within a class syntax
+  // name() {
+  //    Function code goes here
+  // }
+  *[Symbol.iterator]() {
+    yield this.content;
+    // We do this because it will yield the value at the same level because it is reading children and yielding it at
+    // this point into the same level
+    //
+    // This helps us to flat the atribute we want to recursively oterate in a tree data structure that is teh same as
+    // parent node
+    //
+    // For of loop will deliver content and children just as they are so we can use it in the same level
+    for (let child of this.children) {
+      yield* child;
+    }
+  }
+
+}
+
+const children = [
+  new Comment('Good comment', []),
+  new Comment('Bad Comment', []),
+  new Comment('Meh', []),
+];
+
+const tree = new Comment('Great post!', children);
+
+console.log('=Tree data structure=');
+console.log(tree);
+
+console.log('=Iterators within classes=');
+for (let comment of tree) {
+  console.log(comment);
 }
